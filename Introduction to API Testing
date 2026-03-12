@@ -1,0 +1,118 @@
+Introduction to API Testing
+What is client and Server?
+A client is a computer hardware device or software that accesses a service made available by a server. The server is often (but not always) located on a separate physical computer.
+
+A server is a physical computer dedicated to run services to serve the needs of other computers. Depending on the service that is running, it could be a file server, database server, home media server, print server or web server.
+
+Client/Server Architecture
+1>	1 Tier Architecture – It is not connected to the internet, the client computer directly fetching the information from the file server which is directly connected with the client computers. File server is located under same machine.
+
+2>	2 Tier Architecture – we have multiple client computers, but we are accessing the database server here the database server is in different machine. 
+Database server is a separate machine.
+
+3>	3 Tier Architecture – We are accessing the information through the web application to get an information. Here we are getting the information from the server. Client computer -> Application server -> Database server.
+
+What is an API?
+Application Program Interface (API): is the way of communication between two applications where applications may differ in their platforms or in terms of technology. (it is a way of communication between two layers)
+
+Presentation Layer -> Application Layer -> Database Layer
+
+Front end of the application -> Middle layer (API layer) -> Back end of the application
+
+Middle layer 
+•	This is the responsibility of the API layer to fetch data from the backend and display on the frontend
+•	This is also the responsibility of the API layer to take data from the frontend and insert to backend.
+
+What is API testing?
+API testing is a type of software testing that validates the functionality, reliability, performance, and security of an application programming interface (API).
+Instead of interacting with an application through its user interface (UI), API testing involves sending direct requests to the API’s endpoints and verifying that the responses match expected outcomes.
+
+Why is it needed?
+API testing is essential because APIs are the foundation of modern, interconnected software applications (such as microservices architecture) and from the core business logic layer. Testing at this layer offers several significant advantages.
+•	Early Defect Detections
+•	Improved Test Coverage
+•	Faster and More Efficient
+•	Enhanced Security
+•	Ensures Seamless Integration
+•	Language and Platform Independence
+•	Facilitates Automation
+
+Types of API
+There are 2 types of API’s
+1>Simple Object Access Protocol (SOAP) – Old Technology
+2>Rest (Representational State Transfer) – New Technology
+Both are the web services.
+
+Soap support on XML Format
+Rest support JSON,XML,HTML, And Plain Text.
+
+API Vs Webservice
+•	Web Service is an API wrapped in HTTP
+•	All web services are API but APIs are not web services
+•	A web service needs a network while an API doesn’t need a network for its operation 
+•	When all API’s moved into a production, when it is available in the internet is called web services.
+
+
+Rest API HTTP Methods
+What is Rest API?
+A REST API (Representation State Transfer Application Programming Interface) is an architectural style for designing networked applications that use standard HTTP methods to enable communication and data exchange between different software systems.
+
+How Rest APIs Work
+The interaction between a client and a server in a REST API follows a simple request-response cycle over HTTP
+1.	Client Sends a Request: The client sends an HTTP request to a specific endpoint (URL) using an HTTP method, including headers for metadata (like authentication tokens) and an optional message body (for data)
+2.	Server Sends a Request: The server receives, authenticates and processes the request.
+3.	Server Sends a Response: The server sends back a response containing an HTTP status code (e.g., 200 OK, 404 Not found) and a response body (typically formatted in JSON or XML) with the requested data or the result of the operation.
+
+Request Message -> Application Program Interface -> Response Message
+
+Request Message (Http request) -> Get, Post, Put, Patch, Delete
+Response Message (Validations Performed) -> Response Status code, Data etc
+
+Common HTTP Methods
+Rest APIs use standard HTTP methods to perform common data operations (often referred to as CRUD operations: Create, Read, Update, Delete)
+•	GET: Retrieves a resource or a collection of resource (Read)
+•	POST: Creates a new resource on the server (Create)
+•	PUT: Updates or replaces an Existing resource entirely (Update)
+•	PATCH: Applies partial modifications to a resource (Update)
+•	DELETE: Remove a specific resource (Delete)
+
+
+http Vs https
+HTTP – Hyper Text Transfer Protocol is an insecure, unencrypted protocol that sends data as plain text, making it vulnerable to interception.
+HTTPS – HTTP Secure uses SSL/TLS encryption to protect data integrity and authenticity. Essential for secure browsing, login and payments.
+
+Key Difference between HTTP and HTTPS
+•	Security: Http sends data in plain text, making it insecure. Https encrypts data, protecting sensitive information (passwords, credit cards)
+•	Protocol & Encryption: Http uses no encryption. HTTP uses SSL/TLS to create an encrypted connection
+•	Port Numbers: Http uses port 80. Https uses port 443
+•	Browser indicators: Browsers may mark http sites as “Not Secure”. Https sites display a padlock icon in the address bar
+•	SEO and Trust: Google ranks Https sites higher. Users trust https sites more
+•	Speed: Http is generally faster, while Https may be slightly slower due to the overhead of encryption
+
+Terminologies
+URI – Uniform Resource Identifier (complete URI/URL)
+URL – Uniform Resource Locator (URI/URN)
+URN – Uniform Resource Name (URN)
+
+Resource is something which is available in the server
+https://google.com/articles/articlename
+https:// - Scheme
+google.com – Host
+articles/articlename – Path (end point)
+
+Feature and Resource
+Feature is the term used in manual testing to test some functionality and similarly “Resource” is the term used in API automation testing referring some functionality.
+
+Payload
+Payload means body in the HTTP request and response message.
+•	Request Payload – Sending data from client to server
+•	Response payload – Result of processed request from server to client
+
+Client -> Server -> Database
+Http request -> URI, Headers, Payload -JSON/XML
+
+Database
+Http Methods -> Create -POST, Retrieve-GET, Update-PUT, Delete-DELETE
+
+Database->Server->Client
+Http Response -> Status code -200 OK, Response Payload, String message successful
