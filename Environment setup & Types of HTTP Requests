@@ -1,0 +1,156 @@
+PostMan – API testing tool
+We can do manual testing of API’s using postman.
+
+We have Desktop version also Web version – Desktop version just to install the application and open. Web version always need to open in the browser.
+
+Postman download link: https://www.postman.com/downloads/
+What is Workspace?
+Workspace is an area where we maintain files and saved.
+
+Create a new workspace
+1>Top menu bar clicks on workspace
+2>Click on create workspace
+3>Blank workspace
+4>Name -> My Workspace
+5>Workspace type –> Internal
+6>Manage access->Only you & invited people
+7>Click on create
+
+To Rename workspace Name
+1>Top menu bar Select the workspace
+2>View all workspace
+3>Select the workspace which you want to rename
+4>Just click on workspace name
+5>Change the name and click on enter
+
+To Delete the workspace
+
+1>Top menu bar clicks on workspace
+2>View all workspace
+3>Select the workspace which you want to delete
+4>click on settings
+5>scroll down and click on delete workspace
+6>Now type delete and click on delete workspace
+
+What is collection?
+Collection – Contains number of folders and http request.
+Collection has multiple operations – create, rename, delete, run the collection (execute all the scripts)
+
+We can create any number of collections under workspace.
+
+Create a new collection
+1>Click on file from top menu bar
+2>Click on new
+3>Select collection
+4>Give the name and click on enter
+
+If you want to share your collection, move, rename, duplicate, delete and export just select the collection and click on 3 dots.
+
+Request----->API----->Response
+
+Http requests
+Get-> retrieve the resource from database
+Post-> create resource on database
+Put->update existing resource on database
+Patch-> update the partial details of resource on database
+Delete-> Delete existing resource from database
+
+Sample API
+https://jira-jdc-t2.devtools.intel.com/browse/CAT-2
+
+Creating API Token in Jira
+1>Open the Jira
+2>Go to your profile icon
+3>click on profile
+4>Click on personal access token
+5>Click on create token
+6>Give the token name
+7>click on create
+8>now copy the API key
+
+Create new request
+1>Click on file on top menu bar
+2>select new
+3>select http
+4>Now paste the URL : https://jira-jdc-t2.devtools.intel.com/browse/CAT-2
+5>now click on send
+
+How to Authorize Postman using API Key
+1>Open postman
+2>Click on authorization
+3>Select auth type as Oauth 2.0
+4>Now paste the token API key
+
+Validations:
+•	Status code
+•	Time
+•	Size data
+•	Response body (json/xml)
+•	Cookies
+•	headers
+
+In postman make sure you’re uploading a file in this location	
+C:\Users\rkarekax\Postman\files
+
+If not, then please go to postman setting
+1>Go to postman setting on Top menu bar
+2>Click on general tab
+3>Enable Read files outside working directory
+
+Adding attachment to Jira ticket
+1>select post method.
+2>Paste the URL : https://jira-jdc-t2.devtools.intel.com/rest/api/2/issue/CAT-2/attachments
+3> Now click on body.
+4>Key-file
+5>Type – File
+6> Value – choose the file.
+7> Now click on send
+
+Update Assignee on Jira Ticket
+1> Select Put Method
+2>Paste the URL: https://jira-jdc-t2.devtools.intel.com/rest/api/2/issue/CAT-2
+3>Now click on body
+4>Select raw
+5>Select type as JASON
+6>add the below code
+{
+  "fields": {
+    "assignee": { "name": "ad_rkarekax" }
+  }
+}
+7>click on Send.
+
+Delete the Jira ticket
+1>Select Delete Method
+2>paste the URL: https://jira-jdc-t2.devtools.intel.com/rest/api/2/issue/CAT-6
+3>Click on send.
+
+Http Status Codes
+
+1>Level 200  Success
+•	200: OK  Success! Everything worked exactly as expected.
+•	201: Created Your request created a new resource.
+•	202: Accepted We will get to your request once it is your turn in line.
+•	203: Non-Authoritative information.
+•	204: No content Success, but nothing to show. Like a successful deleted.
+
+2>Level 300  Redirection
+•	301: Moved PermanentlyThis moved permanently. Update your bookmarks!
+•	302: FoundTemporarily elsewhere. Like crashing at a friend’s place.
+•	304: Not modifiedNo change, your cached version is still fresh.
+•	307: Temporary Redirect Same as 302 but promises to keep the same HTTP method.
+
+3>Level 400  Client Errors
+•	400: Bad Request Sorry, your request doesn’t make sense.
+•	401: Unauthorizedwho are you? You need to log in first before you can access.
+•	403: Forbidden we know you, but you cannot touch this. Access denied!
+•	404: Not FoundThe classis! This page has vanished into the digital void.
+•	409: Conflict
+
+4>Level 500  Server Errors
+•	500: Internal Server Error Something went wrong on our servers. Wake the devs!
+•	501: Not Implemented
+•	502: Bad Gateway The server got a weird response from another server.
+•	503: Service Unavailablewe’re temporarily closed for maintenance.
+•	504: Gateway Timeout One server gave up waiting for another server. Too slow!
+•	599: Network Timeout
