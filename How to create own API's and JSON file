@@ -1,0 +1,293 @@
+To Create our own API we need to install below software.
+
+•	NodeJS
+•	NPM – Node package manager
+•	JSON-Server
+
+Installation steps of Node JS
+1>Go to this path to download node JS
+https://nodejs.org/en/download
+2>Now double click on the package.
+3> click on next.
+4>accept the license agreement.
+5>click on next.
+6>click on next (don’t change the path)
+7>click on next (let it be default selection)
+8>click on next (Uncheck the tools for navigation module)
+9>click on install.
+
+Now set Environment variables:
+1>Go to any folder
+2> now right click on computer
+3>go to properties
+4>click on advanced system settings
+5>Click on environment variables
+6>In system variables you can see path
+7>select that and click on edit
+8>here the below two entry should be present
+•	Node JS
+•	Node_modules
+9>now click on okay
+
+Just to verify it is working or not follow below steps
+1>open command prompt and run below commands
+2>node - - version It will give you the version node
+3> npm - - version it will give you the version npm
+
+Steps to install Json-server.
+1>open command prompt
+2>run the below command.
+3>npm install -g json-server (copy past as it is if you give any space it will not work)
+
+Create students.json file with the following data.
+1>Open the notepad and paste the below code
+{
+  "students":[
+  {
+        "id": 1,
+        "name": "John Doe",
+        "age": 18,
+        "grade": "12th",
+        "subjects": [
+            "Math",
+            "Physics",
+            "English"
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "age": 17,
+        "grade": "11th",
+        "subjects": [
+            "Biology",
+            "Chemistry",
+            "History"
+        ]
+    },
+    {
+        "id": 3,
+        "name": "David Johnson",
+        "age": 16,
+        "grade": "10th",
+        "subjects": [
+            "Computer Science",
+            "Spanish",
+            "Art"
+        ]
+       }
+    ]
+}
+2>Now save the file with .json format
+3>now one the same location open the cmd
+4>run this command
+5>json-server students.json
+6>now it will create the resources and home url
+7>to check your create API running or not
+8>open this url http://localhost:3000/students
+9>it will provide you the output
+
+
+Now running the above API in the postman
+
+To get student data
+1>Open postman
+2>select Get
+3>Past this url 
+http://localhot:3000/students/1
+4>click on send
+5>it will display the 1 student information because id is 1
+
+To get all students data
+1>open postman
+2>select get
+3>past his url
+http://localhot:3000/students
+4>click on send
+
+To create new student
+1>open postman
+2>select post
+3>paste the below url
+http://localhot:3000/students
+4>now in the body
+5>select the raw and select the json and past the below code
+{
+        "name": "Rohit Karekar",
+        "age": 35,
+        "grade": "Degree",
+        "subjects": [
+            "Computer",
+            "Maths",
+            "Science"
+        ]
+       }
+6>Now click on send
+
+To update Student
+1>open postman
+2>select put
+3>paste the below url
+http://localhot:3000/students/4
+4>now in the body
+5>select the raw and select the json and past the below code
+{
+        "name": "Rohit Karekar",
+        "age": 35,
+        “phone”:”1234567”
+        "grade": "Graduate",
+        "subjects": [
+            "Computer",
+            "Maths",
+            "Science"
+        ]
+       }
+6>click on send
+
+To Delete the student
+1> open postman
+2>select delete
+3>paste the below url
+http://localhot:3000/students/4
+4>click on send
+
+If you want to run the collection
+1>create one collection (Folder)
+2>create all the request under it
+3>now click on folder 
+4>click on 3 dots 
+5>click on Run
+6>now click on Run (it will execute all the request)
+
+JSON – Java script Object Notation (Data Format)
+It is a lightweight, text-based, language-independent data interchange format used to store and transport data, often between servers and web applications.
+
+What is JSON?
+•	JSON – Java Script Object Notation
+•	JSON is a syntax for storing and exchanging data.
+•	It was designed for human-readable data interchange.
+•	JASON is text, written with Java Script Object Notation
+•	It has been extended from the JavaScript scripting language
+•	The filename extension is .json
+•	JSON internet Media type is application/json
+
+JSON Data Types
+•	Number Not required Quotations
+•	String  Required Quotations “ “
+•	Boolean (Ture/False)  it is not required Quotations
+•	Null (Unknown value)Value in json can be null  not required Quotations
+•	Object (Contains the multiple records)
+•	Array  whenever your using double value use [ 1234, 4567 ] square brackets
+
+Enter JSON will be presented in the Key: Value pair
+
+Data Types with examples
+
+1>String – String in JSON must be written in double quotes.
+Example:
+	{ “name” :  “Rohit” }
+
+2>Number – Number in JSON must be an integer or a floating point.
+Example:
+	{  “Age” : 30 }
+
+3>Object – Values in JSON can be objects.
+Example:
+	{
+	“employee” : { “name” : “Rohit”, “age” : 35, “City” : “Belgaum”}
+	}
+
+
+Key is always included in the “” Quotations
+
+{
+“Name” : “Rohit”
+“Middle name” : null
+“Age” : 35
+“Phone” : [ 12345, 56789]
+“Status” : true
+}
+Name and Age are here Keys
+Rohit and 35 are the values.
+If the string is there you need to add “” Quotations.
+If the value is number, no need of “” Quotations.
+
+
+Creating Student data.
+Here we have multiple student information
+Student-->sid, sname, grade
+
+{
+“student” : [
+		{
+			“sid” : 101,
+			“sname” : “Rohit”,
+			“grade” : “A”
+		},
+		{
+			“sid” : 102,
+			“sname” : “Mukund”,
+			“grade” : “B”
+		},
+		{
+			“sid” : 103,
+			“sname” : “Anirudh”,
+			“grade” : “C”
+		},
+
+	]
+}
+
+Comparison between JSON VS XML
+JSON
+•	JSON is simple to read and write
+•	It also supports array
+•	Json files are more human-readable than xml
+•	It supports only text and number data type
+
+XML
+•	XML is less simple as compared JSON
+•	It doesn’t support array
+•	XML files are less human readable
+•	It supports many data types such as text, number, images, charts, graphs, etc.
+
+Capture and Validate JSON Path
+
+JSONPath:  It is a query language (like XPath for XML) used to find and extract specific data from JSON.
+
+JSON Path Finder: It is a tool or web app that automatically generates those paths for you by visualizing the structure.
+
+
+https://jsonpathfinder.com/ ---> User this link to find the path it will auto generate the path
+
+https://jsonpath.com/ ---> user this link if you want to find the path
+
+Example : 
+{ 
+  "students" : [
+    {
+			"sid" : 101,
+			"sname": "Rohit",
+			"grade": "A"
+		},
+		{
+			"sid":102,
+			"sname":"Mukund",
+			"grade":"B"
+		},
+		{
+			"sid":103,
+			"sname":"Anirudh",
+			"grade":"C"
+		}
+	]
+}
+
+Here the array will be student
+And the path will be object 0, object 1, object 2
+In array object always start with 0, 1, 2
+And value will be 101, Rohit , A
+
+So, our JSONPath will be
+
+Student[0].sname     it will return Rohit
