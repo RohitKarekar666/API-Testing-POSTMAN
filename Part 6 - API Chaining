@@ -1,0 +1,130 @@
+API Chaining
+API Chaining is nothing but sending a request and the from the result you’re taking a data and sending another request.
+
+1>Run your local api and copy the URL
+2>Open Postman
+3>now select PUT and past the url 
+4>Now in the body select Raw
+5>Select JSON and past the below code 
+{
+ "id":1,
+	"name" : "John",
+	"location" : "india",
+	"phone" : "12345678",
+	"courses" : [
+			"Java",
+			"Selenium"
+		]
+}
+6>now go to test and write below code
+var jsonData=JSON.parse(responseBody);
+pm.environment.set("id",jsonData.id);
+7>now select the 2nd request
+8>select GET
+9>paste this URL 
+//here we are adding the environment id which we create under 1st request
+http://localhost:3000/student/{{id}}
+10>now select the 3rd request
+11>select Delete
+12>paste this Url
+//here also we are using the same id which was used in the 2nd request
+http://localhost:3000/students/{{id}}
+13>now run the collection and check the result.
+
+
+Open this URL : https://gorest.co.in/
+GraphQL and REST API for Testing and Prototyping
+
+To access these api you need to create one API Token. Follow the below method.
+•	In the same page you can see Get your access token
+•	Open that in a new window
+•	So here you will get 3 options GitHub, google and Microsoft
+•	Choose one of the account
+•	Now it will provide you the Access Token
+•	Here you have option to create multiple Token
+•	These token will never expire but it has 90 limits
+•	You also have option to delete the token.
+•	Now just copy the token.
+
+POST 		/public/v2/users		Create a new user
+GET 		/public/v2/users/7881636	Get user details
+PUT|PATCH 	/public/v2/users/7881636	Update user details
+DELETE 	/public/v2/users/7881636	Delete user
+
+Token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+Request Body
+{
+"name":"scott", 
+"gender":"male", 
+"email":"abc@gmail.com", 
+"status":"active"
+}
+
+Now to generate random name and email address please user the below script
+And add this script in the Pre-Request script
+var random=Math.random().toString(36).substring(2);
+
+var useremail="jim"+random+"@gmail.com";
+var username="jim"+random;
+
+Also create an environment variable
+pm.environment.set("email_env","useremail");
+pm.environment.set("name_env",username);
+
+now we are going to refer the environment variables in the body
+{
+"name":"{{name_env}}", 
+"gender":"male", 
+"email":"{{email_env}}", 
+"status":"active"
+}
+
+Now the get response and store the ID in the environment.
+Now the below script save in the test and click on save. 
+var jsonData=JSON.parse(responseBody);
+pm.environment.set("userid_env",jsonData.id);
+
+Now in the get request you need to add this URL
+https://gorest.co.in/public/v2/users/{{userid_env}}
+
+Now in the post script of get user you need to add the below script to compare the values which you passed in the pre-request script in the create user request.
+
+//validating json field in the response
+pm.test("values of json fields", () =>{
+    var jsonData=pm.response.json();
+
+    pm.expect(jsonData.id).to.eql(pm.environment.get("userid_env"))
+    pm.expect(jsonData.email).to.eql(pm.environment.get("email_env"))
+    pm.expect(jsonData.name).to.eql(pm.environment.get("username_env"))
+}
+);
+
+Now in the update user request you need to pass same information in the pre request script To generate random user details
+var random=Math.random().toString(36).substring(2);
+
+var useremail="jim"+random+"@gmail.com";
+var username="jim"+random;
+
+pm.environment.set("email_env","useremail");
+pm.environment.set("name_env",username);
+
+And in the update user request body paste the below script
+
+{
+"name":"{{name_env}}", 
+"email":"{{email_env}}", 
+"status":"inactive"
+}
+
+And Delete user request just pass this URL
+https://gorest.co.in/public/v2/users/{{userid_env}}
+
+Also, in the post request of Delete request you need to add below script to remove variables
+pm.environment.unset("email_env");
+pm.environment.unset("name_env");
+pm.environment.unset("userid_env");
+
+Note : The above steps which we made we cannot execute particular request because everything is dependent on other requests. So, we need to run the collections.
+
+
