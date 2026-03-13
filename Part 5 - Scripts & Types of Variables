@@ -1,0 +1,176 @@
+Scripts & Types of variables
+
+Pre-request scripts – It will get executed before sending the request. It will use if you want to pass something in the body
+
+Postscript – it will get executed after sending the request. It will use to check everything is executed correctly or not
+
+Pre-Request scripts  Request Response Tests
+
+Pre-Request Scripts we can write in 3 different Level
+•	Collection Level
+•	Folder Level
+•	Request Level 
+
+Tests Scripts also have these same 3 levels
+•	Collection Level
+•	Folder Level
+•	Request Level
+
+Add the below script on all the level
+
+Pre-request script
+console.log("pre-request script request level")
+
+Post request script
+console.log("Test script request level")
+
+Note : if you want to see all the executions then the collection, folder and request all are inter connected. Else where you will run the script it will display that level. In the post man console.
+
+Postman variables
+We can create variables at following levels (scope)
+•	Global
+•	Collection
+•	Environment
+•	Local
+•	Data
+
+Variable Types
+•	Default type
+•	Secret type
+
+What is variable ?
+Variable in Postman is a reusable placeholder (key-value pair) that stores values you can reference throughout your request, collections, environments, and scripts.
+
+Why is variable used?
+In short, Postman variables are used to automate updates and keep your data organized. Instead of manually typing a URL or token 50times, you type it once and let the variable handle the rest.
+
+Where are variable used?
+You can plug a variable into almost any part of the Postman interface using the {{variable_name}}
+
+•	Request URL : {{base_url}}/users/1
+•	Headers: Key: Authorization, Value: Bearer{{my_token}}
+•	Body(JSON/Form data) : {“email”:”{{user_email}}”}
+•	Auth Settings: In the “Token” or “Username” field of the Auth tab
+•	Script: In the Pre-request or Tests tabs using code like
+pm.environment.get(“Varuabke_name”)
+
+Global Variable 
+It is accessible in multiple collection
+Workspace  Collections  Requests
+
+How to create Global variable
+1>Open the postman
+2>in the top right side you will See All variables
+Here you will see 2 options : Environment and Global
+3>Under global click on Add button
+4>Now add below details 
+Variable  url_global
+Value https://jira-jdc-t2.devtools.intel.com
+5>Save it
+6>now come to get and type below url
+{{url_global}}/rest/api/2/issue/CAT-2
+7>Click on send
+It will give you the result because we have added the global variable. So, wherever the URL is getting added you can use {{url_global}} instead of complete link   https://jira-jdc-t2.devtools.intel.com in such way you can create different types of variables.
+
+Collection Variable
+When you create variables at collection level you can access that variable within collection
+
+Steps to create collection variable
+1>Go to collection
+2>Now when you select that
+3>In middle panel you will see the option called variable
+4>click on that
+5>now add the below details
+Variable  url_collect
+Value https://jira-jdc-t2.devtools.intel.com
+5>Save it
+6>now come to get and type below url
+{{url_collect}}/rest/api/2/issue/CAT-2
+7>Click on send
+
+Environment Variable
+When you have different environments like dev, production, sandbox, and you want to execute the request on the specific environment then you can use this variable.
+
+1>Open Postman
+2>Click on Environment Quick look on Top Right corner
+3>Under All Variables
+4>Click on select environment
+5>Crate Variables
+6>now add the below details 
+Note : for each environment, please give the name and create separately
+Environment name = Sandbox
+Variable  sandbox
+Value https://jira-jdc-t2.devtools.intel.com
+
+Environment name = Production
+Variable  production
+Value https://jira.devtools.intel.com
+7>Save it
+8>now come to get and type below url
+{{sandbox}}/rest/api/2/issue/CAT-2
+9>Click on send
+
+Note : Also, you can create environment from left panel. Just click on plus and add the details. And whenever you want to run based on environment, please select the environment 1st.
+
+Local Variable
+These variables we can create at request level. But in the request level we don’t find variable section. So, we need to write a script under pre-request script.
+There is no direct method for this. We need a proper script.
+
+How to create a variable script for request level
+1>open the postman
+2>select the request
+3>click on pre-request script
+4>add the below script
+//local variables
+pm.variables.set("url_local", "https://jira-jdc-t2.devtools.intel.com");
+5>now come to get and type below url
+{{url_local}}/rest/api/2/issue/CAT-2
+6>Click on send
+
+Till now we have created the variable at different level like global, environment and collection.
+
+Now let see how to create all the level at the request level.
+
+Use the below scripts under the pre-request script
+
+//Global variables
+pm.globals.set("userid_global", "https://jira-jdc-t2.devtools.intel.com");
+
+//Environment variables
+pm.environment.set("T2", "https://jira-jdc-t2.devtools.intel.com");
+
+//Collection variables
+pm.collectionVariables.set("url2_collect", "https://jira-jdc-t2.devtools.intel.com");
+
+Unset /remove the created variables.
+
+Requirement is once the variable is created under request and the once the request is executed the created variable should get delete it should be created permanently.
+
+1>go to postman
+2>select the script
+3>click on post request
+4>now add the below script to delete the variable
+//Global variables
+pm.globals.unset("userid_global", "https://jira-jdc-t2.devtools.intel.com");
+
+//Environment variables
+pm.environment.unset("T2", "https://jira-jdc-t2.devtools.intel.com");
+
+//Collection variables
+pm.collectionVariables.unset("url2_collect", "https://jira-jdc-t2.devtools.intel.com");
+
+
+You created the variables using pre-request script, but you want to get the result of that creation then follow the below method.
+
+1>go to postman
+2>select the request
+3>select the script
+4>click on post script
+5>type the below scripts
+
+console.log(pm.globals.get("userid_global"));
+console.log(pm.environment.get("T2"));
+console.log(pm.collectionVariables.get("url2_collect"))
+
+6>Click on send now it will display the result once it got created
+
