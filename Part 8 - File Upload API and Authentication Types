@@ -1,0 +1,116 @@
+File Upload API and Authentication Types
+1>Open CMD
+2>Now install the JAR file
+3>now type cd C:\Users\rkarekax\Downloads and press enter
+4>now type java -jar file-upload-RestAPI.jar and press enter
+5>Now it will run the API after that you can able to see the below things
+5>now come to browser and in the URL section
+6>type localhost:8080
+7>It will show you to upload single and multiple API testing
+
+The below one is the API Testing which we are using through Postman
+URL to upload single file
+POST : http://localhost:8080/uploadFile
+
+URL to upload multiple files
+POST : http://localhost:8080/uploadMultipleFiles
+
+Now create the above 2 Request in the Postman
+
+Single File Upload
+1>Create new collection and give the name as File Upload
+2>Click on new request and give the name as upload single file
+3>select POST and past this URL : http://localhost:8080/uploadFile
+4>Now click on Body
+5>Select from-data 
+6>Key will be file and type will be File
+7>In the value browse the file and select the file
+8>now click on send
+
+Multi File Upload
+1>Create new collection and give the name as File Upload
+2>Click on new request and give the name as upload Multi files upload
+3>select POST and past this URL : http://localhost:8080/uploadMultipleFiles
+4>Now click on Body
+5>Select from-data 
+6>Key will be files and type will be File
+7>In the value browse the file and select the multiple files
+8>now click on send
+
+Where these above files are getting uploaded.
+It is getting uploaded in the below locations C:\uploads
+
+Authentication Types
+Basic authentication
+For this we need user name and password, but it is not encrypted
+
+Digest authentication
+For this we need user name and password, but it is encrypted
+
+Auth 2.0
+For this we need to create PAT key, and it is highly encrypted authentication
+
+You can also create a token from the github
+
+For Normal Token
+1>Login to GitHub
+2>go to your profile and click on settings
+3>click on developer settings
+4>click on personal access token
+5>click on generate new token (classic) for general use
+6>Give the note name
+7>select the expire date
+8>select the scope by check mark
+9>now go down and click on generate token
+
+For OAuth Token
+1>Login to GitHub
+2>go to your profile and click on settings
+3>click on developer settings
+4>click on OAuth Apps
+5>Click on new OAuth app
+6>Give the application name
+API Testing Training
+7>Homepage URL
+http://localhost:3000
+8>Authorization callback URL
+http://localhost:3000/callback
+9>Click on Register application
+10>once the registration is done you will see the client ID
+11>now you need to Generate the client secret
+12>now your able to see the client secret ID
+13>Click on register application.
+14>Please note down client ID and client secret
+
+Step 1: Request a user’s github identity
+1>Go to Postman
+2>select GET and Past this URL : http://github.com/login/oauth/authorize?client_id=e2e76f497363a381720d
+3>select params
+4>In key type client_id
+5>in Value paste the client id token
+6>now click on send
+7>once you send open the above url in the browser to get the code
+8>now the code which you will get the browser URL please copy that code
+
+Step 2: Users are redirected back to your site by GitHub
+1>Go to Postman
+2>select POST and type this URL
+3>select params
+4>in key and value type these 3 things
+•	client_id and value
+•	client_secret and value
+•	code and value
+5>now click on send
+6>now you will get the OAuth access token
+
+Make sure while doing this activity the tomcat service should be running.
+
+If you want to create documentation you can also do that.
+
+1>Open the postman
+2>select the collection
+3>after executing all the collection
+4>click on view complete documentation
+5>click on publish the documentation
+6>now the url will be generated
+7>you can share that URL with your friends.
