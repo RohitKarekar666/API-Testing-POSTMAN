@@ -1,0 +1,217 @@
+Parameterisation & Data Driven testing
+Simple Book API
+This API allows you to reserve a book
+The API is available at https://simple-books-api.glitch.me
+
+API Authentication
+
+To submit or view an order. You need to register your API client.
+
+POST /api-clients/
+The request body needs to be in JSON format and include the following properties:
+•	clientName – String
+•	clientEmail – String
+
+Example:
+
+{
+	“clientName” : “Valentin”,
+	“clientEmail” : “Valentin@example.com”
+}
+The response body will contain the access token. The access token is valid for 7 days.
+
+"accessToken": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+Possible errors
+
+Status code 409 = “API client already registered”. Try changing the values for clientEmail and clientName to Something else.
+
+Endpoints
+
+Status
+GET/status
+Return the status of the API
+
+List of Books
+GET / books
+Returns a list of books
+
+Optional Query parameters:
+•	Type: fiction or non-fiction
+•	Limit : a number between 1 and 20
+
+Get  a single book
+
+GET / books /:bookId
+Retrieve detailed information about a book.
+Submit an order
+POST / orders
+Allows you to submit a new order. Requires Authentication.
+
+The Request Body Need to be in JSON format and include the following properties:
+•	bookId – Integer – Required
+•	customerName – String – Required
+
+Example
+
+POST /orders/
+Authorization: Bearer <Your Token>
+
+{
+    "bookId" : 1,
+    "customerName" : "John"
+}
+
+The response body will contain the access token.
+
+Get all orders
+GET /orders
+Allows you to view all orders. Requires authentication.
+
+Update an order
+PATCH / orders/:orderId
+Update an existing order. Requires authentication.
+
+The request body needs to be in JSON format and allows  you to update the following properties:
+•	customerName – String
+
+Example
+
+PATCH / orders/PF6Mf1PDcuhWobZcgmJy5
+Authentication: Bearer <your token>
+
+{
+	“customerName : “John”
+}
+
+Delete an order
+
+DELETE / orders /:orderId
+Delete an existing order. Required Authentication.
+
+The request body needs to be empty.
+
+Example
+
+DELETE /orders/PF6Mf1PDcuhWobZcgmJy5
+Authorization: Bearer <your token> 
+Now we are creating all the above requests one by one.
+
+Creating A Token
+1>First create one collection
+2>Now create new request and give name Create Token
+3>select POST and paste this url : https://simple-books-api.glitch.me/api-clients/
+4>Go to body select raw and select JSON and paste the below script
+{
+    "clientName" : "fenta",
+    "clientEmail" : "fenta@gmail.com"
+}
+//This script will generate your token
+
+Check the Status of book
+1>First create one collection
+2>Now create new request and give name Status of book
+3>select GET and paste this url : https://simple-books-api.glitch.me/status
+
+Check the list of books
+1>First create one collection
+2>Now create new request and give name list of books
+3>select GET and paste this url : https://simple-books-api.glitch.me/books
+
+Get single book information
+1>First create one collection
+2>Now create new request and give name list of books
+3>select GET and paste this url : https://simple-books-api.glitch.me/books/1
+
+Submitting a Book Order
+1>First create one collection
+2>Now create new request and give name Submit Order
+3>select POST and paste this url : https://simple-books-api.glitch.me/orders
+4>Go to body select raw and select JSON and paste the below script
+{
+    "bookId" : 1,
+    "customerName" : "John"
+}
+5>Go to authentication Tab and select Auth Type
+6>As Bearer Token and paste the token
+
+To Get all order information
+1>First create one collection
+2>Now create new request and give name Get All Order
+3>select GET and paste this url : https://simple-books-api.glitch.me/orders
+
+To Update the order information
+1>First create one collection
+2>Now create new request and give name Update Order
+3>select PATCH and paste this url : https://simple-books-api.glitch.me/orders/1
+
+To delete the order
+1>First create one collection
+2>Now create new request and give name Update Order
+3>select DELETE and paste this url : https://simple-books-api.glitch.me/orders/1
+
+Now here we are creating chaining method
+
+We are creating a post request to submit an order. once the order id is created. we are getting the order information and order ID from get request. The response we are getting from the get request. we are checking that response whether the order id is as same order id or not when the order was created. so, for that we are adding one more validation point in the get request. Now to delete the request we don’t need the body but we are passing some validation of status code and also, we are deleting the all the environment ids.
+
+Post -> Order ID-> Get ->Response
+	Order ID->Delete
+
+Creating submit Oder
+1>Add new request and give name submit order
+2>select POST and paste this URL : https://simple-books-api.glitch.me/orders
+3>Go to body select raw and select JSON and paste the below script
+{
+    "bookId" : "{{bookId}}",
+    "customerName" : "{{customerName}}"
+}
+4>now go to script and select post-request and paste below script
+pm.test("Status code is 201", ()=>{
+    pm.response.to.have.status(201);
+});
+
+var jsonData=JSON.parse(responseBody);
+pm.environment.set("orderid_env",jsonData.orderId);
+
+Creating the Get Single Order
+1> Add new request and give name Get single order
+2>now select GET and paste this URL : https://simple-books-api.glitch.me/orders/{{orderid_env}}
+3>Now go to script and click on Post-request and paste the below script
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("check orderId present in the response body", () => {
+   var jsonData=pm.response.json();
+   pm.expect(jsonData.id).to.eql(pm.environment.get("orderid_env"));
+});
+
+Creating Delete Order
+1>Add new request and give name Delete Order
+2>now select Delete and paste this URL : https://simple-books-api.glitch.me/orders/{{orderid_env}}
+3>now go to script and click on Post-request and paste the below script
+pm.test("Status code is 204", function () {
+    pm.response.to.have.status(204);
+});
+
+//to delete the created environment
+pm.environment.unset("orderid_env");
+
+Now to run the collections
+1>Select the collection
+2>select Functional
+3>click on Run collection
+4>now select whatever collection you want to run.
+We are running all the collection, so we have selected all.
+5>Iterations – it means how many time you want to run this collection
+We have 5 recorder (based on your records / data) select the iterations
+We are choosing here 5
+6>Delay you can give 3ms
+7>Now select the CSV file (these data we are passing from the post request)
+8>Now run the collection
+
+Now we can convert this csv file into JSON format
+1>To do that use the below link : 
+https://www.convertcsv.com/csv-to-json.htm
+2>once the file is converted just save that file.
+3>Now while running the collection just choose that JSON file that’s it.
