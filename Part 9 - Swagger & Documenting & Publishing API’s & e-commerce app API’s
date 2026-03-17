@@ -1,0 +1,182 @@
+Documenting & Publishing API’s & e-commerce app API’s
+
+Swagger Petstore  – it is an API  site you have lots of API for testing with example
+
+We are creating some example in swagger
+
+Create User
+1>Open PostMan
+2>Create one new collection and name it as Swagger Petstore
+3>create a new request and name it as create user
+4>now select POST and paste this URL: https://petstore.swagger.io/v2/user
+5>now in the body select raw and select JSON and past this script
+{
+    "id":{{id}},
+    "username":"{{username}}",
+    "firstName":"{{firstName}}",
+    "lastName":"{{lastName}}",
+    "email":"{{email}}",
+    "password":"{{password}}",
+    "phone":"{{phone}}",
+    "userStatus":"{{userStatus}}"
+
+}
+6>now go pre-script and paste this script
+const randomnum = Math.floor((Math.random()*100+1));
+var randomstr = "john"+Math.random().toString(36).substring(2);
+
+pm.environment.set("id",randomnum);
+pm.collectionVariables.set("username",randomstr);
+pm.collectionVariables.set("firstName",randomstr);
+pm.collectionVariables.set("lastName",randomstr);
+pm.collectionVariables.set("email",randomstr+"gmail.com");
+pm.collectionVariables.set("password",randomstr);
+pm.collectionVariables.set("phone","1111111");
+pm.collectionVariables.set("userStatus",0);
+//console.log(randomnum);
+7>now go to post script and paste this script
+pm.test("check status code",function(){
+    pm.response.to.have.status(200);
+});
+
+Get User By name
+1>Open Postman
+2>create a new request and name it as Get User By Name
+3>now select GET and paste this URL: https://petstore.swagger.io/v2/user/{{firstName}}
+4>now in the post script paste the below script
+pm.test("check status code", function(){
+    pm.response.to.have.status(200);
+});
+
+
+Updated User
+1>Open Postman
+2>create a new request and name it as Updated User
+3>now select PUT and paste this URL: https://petstore.swagger.io/v2/user/{{firstName}}
+4>now in the body select raw and select JSON and paste this script
+{
+    "id":{{id}},
+    "username":"{{username}}",
+    "firstName":"{{firstName}}",
+    "lastName":"{{lastName}}",
+    "email":"{{email}}",
+    "password":"{{password}}",
+    "phone":"{{phone}}",
+    "userStatus":"{{userStatus}}"
+}
+5>now in the pre-request paste this script
+var randomstr = "john"+Math.random().toString(36).substring(2);
+
+//updating email & phone
+pm.collectionVariables.set("email",randomstr+"@gmail.com");
+pm.collectionVariables.set("phone","22222222");
+6>now in the post request paste this script
+pm.test("check status code",function(){
+    pm.response.to.have.status(200);
+});
+
+Delete User
+1>Open postman
+2>create new request and name it as Delete User
+3>now select DELETE and paste this UR: https://petstore.swagger.io/v2/user/{{firstName}}
+4>now in the post request paste this script
+pm.test("check status code", function(){
+    pm.response.to.have.status(200);
+});
+
+pm.environment.unset("id");
+pm.environment.unset("username");
+pm.environment.unset("firstName");
+pm.environment.unset("lastName");
+pm.environment.unset("email");
+pm.environment.unset("password");
+pm.environment.unset("phone");
+pm.environment.unset("userStatus");
+
+Now run the collection and check the console and response.
+
+Now Create and Publish documentation
+1>Select the collection and click on View Complete Documentation
+2>Click on Publish
+3>Click on Publish
+4>Copy the Published Documentation URL 
+https://documenter.getpostman.com/view/46579071/2sBXihoraA
+5>Now share with your friends
+6>They can open this URL and click on Run In Postman
+7>Now select the workspace and import the collection
+8>It will show you everything which we have created above.
+
+Ecommerce Applications
+
+Opencart – it is a free ecommerce API application
+
+Opencart Build Deployment / installation
+1)Opencart download location:
+https://www.opencart.com/index.php?route=cms/download
+
+2)XAMPP for apache, mysql, and php installation
+https://www.apachefriends.org/download.html
+
+3>Once the XAMPP installation is completed
+4>Open the XAMPP Control Panel
+5>Now start Apache and MySQL
+
+Step by step OpenCart Installation
+
+6>Copy opencart folder(step1)in the below location.
+C:\xampp\htdocs
+
+7>After copying rename the folder “opencart”
+
+8>Rename files
+Go to c:\xampp\htdocs\opencart\upload
+Rename file ‘config-dist.php’ to ‘config.php’
+
+Go to c:\xampp\htdocs\opencart\upload\admin
+Rename file ‘config-dist.php’ to ‘config.php’
+
+9>Connect to the database and create DB.
+DB Access URL : http://localhost/phpMyAdmin/
+
+Create new database ‘openshop’ 
+1>Go to the database section
+2>Provide the database name as openshop
+3>select type as collection and click on create
+
+10>Open the site http://localhost/opencart/
+Click on Upload
+11>click on continue 
+
+If you are getting above error GD is off then you have to do below steps.
+Open XAMPP control panel, click on config button for Apache then open PHP(php.ini) file
+Add new entry in the php.ini file extension=gd
+Then stop and start Apache server. Then you will see below screen.
+
+12>Provide the database connection details
+1.	Please enter your database connection details
+	DB Driver : MySQL
+	Hostname : localhost
+	Username: root
+	Database: openshop
+	Port:3306
+2.	Please enter a username and password for the administrator
+Username : admin
+Password: admin
+Email: admin@gmail.com
+3.	Click on continue
+
+13>Go to location c:\xampp\htdocs\opencart\upload
+Delete install folder
+
+14>Go to Application URL
+Frontend application URL : http://localhost/opencart/upload/
+
+15>Now open the opencart in the browser
+16>login with credentials
+17>go to user section under user
+18>add new user and generate API Token and Status enabled
+19>Now go to Ip address tab and add your computer ip address
+20>now click on save.
+
+For documentation of open cart use the below link.
+https://docs.opencart.com/#opencart-documentation
