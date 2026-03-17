@@ -1,0 +1,267 @@
+E-Commerce API’s & How to Run Collections & Git Github & Jenkins
+
+http://myopencart.example.com/index.php?route=api/login
+http://myopencart.example.com/index.php?route=api/shipping/address
+http://myopencart.example.com/index.php?route=api/cart/add
+
+instead of using complete url you can use like this
+
+{{baseURL}}api/login
+{{baseURL}}api/shipping/address
+{{baseURL}api/cart/add
+
+Instead of URL we are setting the IP in the collection variable tab
+IP = 134.56.78.90
+baseURL = http://{{ip}}/index.php?route=
+
+Please use the below URL to Import the collection
+https://documenter.getpostman.com/view/4924228/UzXM1JmQ#bbce8c7d-2ae7-4e2b-Baa6-adffcfdcb9c4
+
+Create collection and create a request to create token, add products to a cart, cart content, edit product quantity in a cart, remove product from a cart.
+
+Create Session/Token
+1>Open Postman
+2>Create a new collection and name it as Opencart_RestAPI_CartModule
+3>Now in the collection variable Tab provide these below details
+Ip = your system ip address
+baseUrl = http://{{ip}}/opencart/upload/index.php?route=
+3>Now create new request and name it as Create Session/Token
+4>Now select POST and paste this URL : {{baseUrl}}api/login
+5>In the body tab select from-data and enter these below details (Get these details from opencart admin portal)
+User name – demo
+Key- xxxxx
+6>Now in the Post Request paste this code
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+//capturing response
+ var jsonData = pm.response.json();
+
+//Validating JSON response 
+pm.test("checking success msg in response", () => {
+    pm.expect(jsonData.success).to.eql("Success: API session successfully started!");
+   
+});
+
+//creating collection variable to store api_token
+pm.collectionVariables.set("api_token_val",jsonData.api_token)
+Add product to cart
+1>create new request under collection and name it as Add product to cart
+2>select POST and paste this URL : {{baseUrl}}api/cart/add
+3>Now Params add the token which you got in the 1st request
+Key : api_token
+Value: paste the token
+4>Now in the Auth Tab select below details
+Auth type : API Key
+Key : api_token
+Value : {{api_token_val}}
+Add to : Query Params
+5>Now in the body tab select from-data
+Key		type		Value
+product_id	text	{{product_id}}
+quantity	text 	{{quantity}}
+6>Now in the pre-request script add the below code
+pm.collectionVariables.set("product_id","40");
+pm.collectionVariables.set("quantity","2");
+7>now in the post request script add the below code
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+//Validating JSON response 
+pm.test("checking success msg in response", () => {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.success).to.eql("Success: You have modified your shopping cart!");
+});
+
+
+Cart Content
+1>create new request under collection and name it as Cart Content
+2>Now select GET and paste this URL : {{baseUrl}}api/cart/products
+3>Now Params add the token which you got in the 1st request
+Key : api_token
+Value: paste the token
+4>Now in the Auth Tab select below details
+Auth type : API Key
+Key : api_token
+Value : {{api_token_val}}
+Add to : Query Params
+5>Now in the body tab select from-data
+Key : product_id
+Type : text
+Value: {{product_id}}
+6>Now in the post request script type the below code
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+var jsonData=JSON.parse(responseBody);
+pm.environment.set("cart_id_key",jsonData.products[0].cart_id);
+Edit product Quantity in Cart
+1>create new request under collection and name it as Edit product Quantity in Cart
+2>Now select POST and paste this URL : {{baseUrl}}api/cart/edit
+3>Now Params add the token which you got in the 1st request
+Key : api_token
+Value: paste the token
+4>Now in the Auth Tab select below details
+Auth type : API Key
+Key : api_token
+Value : {{api_token_val}}
+Add to : Query Params
+5>Now in the body tab select from-data
+Key		type		Value
+Key		text		{{cart_id_key}}
+quantity	text		5
+6>Now in the post request script type the below code
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+//Validating JSON response 
+pm.test("checking success msg in response", () => {
+     var jsonData = pm.response.json();
+    pm.expect(jsonData.success).to.eql("Success: You have modified your shopping cart!");
+   
+});
+
+Remove product from cart
+1>create new request under collection and name it as Remove product from cart
+2>Now select POST and paste this URL : {{baseUrl}}api/cart/remove
+3>Now Params add the token which you got in the 1st request
+Key : api_token
+Value: paste the token
+4>Now in the Auth Tab select below details
+Auth type : API Key
+Key : api_token
+Value : {{api_token_val}}
+Add to : Query Params
+5>Now in the body tab select from-data
+Key		type		Value
+Key		text		{{cart_id_key}}
+6>Now in the post request script type the below code
+pm.test("Status code is 200", () => {
+    pm.response.to.have.status(200);
+});
+
+//Validating JSON response 
+pm.test("checking success msg in response", () => {
+     var jsonData = pm.response.json();
+    pm.expect(jsonData.success).to.eql("Success: You have modified your shopping cart!");
+   
+});
+
+//Un-set collection variables
+pm.collectionVariables.unset("api_token_val")
+pm.collectionVariables.unset("product_id")
+pm.collectionVariables.unset("quantity")
+pm.environment.unset("cart_id_key");
+
+Please note here for delete, for update we are using PUT request. It is based on the API provided by the Opencart. So do not confuse.
+
+How many ways we can run the collections
+
+1>From the Command Prompt
+Pre-requisites:
+1.	Install node.js(npm)
+2.	Install newman
+3.	Export collection
+
+Step 1> we have already installed the node.js just open the command prompt and check if node and npm are installed or not
+node -v
+npm -v
+
+step 2> Install Newman
+npm install -g newman
+
+step 3> export collection
+•	select the collection
+•	click on 3 dot
+•	select export
+•	select collection v2.1 and click on Export
+
+how to run the collection from command prompt
+Approach 1> Run the collection in the command prompt locally
+•	just go the location wherever you have saved your collection
+•	In the browser type cmd
+•	newman run <enter the collection file name with extension>
+
+now it run the command and display the result.
+But if you want to display this result in the HTML format then run the below command
+
+Npm install -g newman-reporter-html
+
+now running the command in the html format
+•	just go the location wherever you have saved your collection
+•	In the browser type cmd
+•	newman run <enter the collection file name with extension> -r html
+•	it will generate the report in the same location
+
+
+Approach 2> Run the collection remotely using URL (other than your computer)
+•	Go to postman select the collection
+•	Click on 3 dot and click on share
+•	Now click on 3 dot share via API
+•	Now click on generate new key
+•	Copy the URL : https://api.postman.com/collections/46579071-ce1744a1-338f-4a6a-bfa8-56eef44d4068?access_key=xxxxxxxxx
+•	Open the command prompt
+•	newman run <paste the url> -r html
+
+How to run the collection in jenkins
+
+Approach 3>
+1>open the jenkins app
+2>login with your credentials
+3>Now click on create a new item
+4>Given the name as OpenCart_Postaman_Collection
+5>Select freestyle project and click on ok
+6>now it will navigate to the configuration page for a particular project
+7>now come down in the build section and add build step as
+Execute windows batch command
+8>now paste this below command
+newman run <enter the URL which you have create from 2nd approach> 
+9>click on Apply and save
+10>now it will go the project specific dashboard
+11>now click on Build Now
+11>you can run this from anywhere just go to home page and select link and click on build now
+
+How to run the collection from the github
+
+Approach 4>
+1>login to the github
+2>create empty repositories
+3>give the name opencart_API_Testing
+4>now you will get the repositories url
+5>copy that URL
+
+How to create local repositories
+1>install git software
+2>now go to the location where you have exported the collection
+3>right click and open git bash
+4>now type
+Gir init
+5>now type (to connect the local repo with remote repository (github))
+Git remote add origin https://github.com/rohitkarekar/opencart_API_testing.git
+6>now type (to check the status of file)
+git status
+7>now type (add the file to index/stage)
+Git add Opencart_RestAPI_CartModule.postman_collection.json
+8>now type
+git status
+9>now type (now the file is present in the local repository)
+git commit -m “comment”
+10>now type (to push the file in the remote repository)
+git push origin master
+11>now the file is added in the github repository
+
+Now again go jenkins to run the repository
+1>open Jenkin
+2>New item
+3>Opencart_API_github
+4>select freestyle project and click ok
+5>now select the source code management as git
+6>paste the repositories url
+7>come to build section select execute windows batch command
+8>now paste the below command
+newman run <enter the URL which you have create from 2nd approach> 
+9>now apply and save
+10>click on build now
